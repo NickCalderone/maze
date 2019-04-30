@@ -15,25 +15,26 @@
 }
 
 .grid {
-    width: 155px;
+    width: 185px;
     font-size: 0px;
 }
 
-.non-player {
+.box {
     display: inline-block;
     background-color: red;
     border: solid red 6px;
     width: 25px;
     height: 25px;
-    margin: 0 0 -6px -6px;
 }
+
+.non-player {
+}
+
 .player {
     background-color: blue;
     display: inline-block;
-    border: solid red 6px;
     width: 25px;
     height: 25px;
-    margin: 0 0 -6px -6px;
 }
 
 .red {
@@ -77,5 +78,39 @@
 
 .tl {
     border-top: solid 6px;
+    border-left: solid 6px;
+}
+
+.tb {
+    border-top: solid 6px;
+    border-bottom: solid 6px;
+}
+
+.rl {
+    border-right: solid 6px;
+    border-left: solid 6px;
+}
+
+.trb {
+    border-top: solid 6px;
+    border-right: solid 6px;
+    border-bottom: solid 6px;
+}
+
+.rbl {
+    border-right: solid 6px;
+    border-bottom: solid 6px;
+    border-left: solid 6px;
+}
+
+.tbl {
+    border-top: solid 6px;
+    border-bottom: solid 6px;
+    border-left: solid 6px;
+}
+
+.trl {
+    border-top: solid 6px;
+    border-right: solid 6px;
     border-left: solid 6px;
 }

@@ -12,24 +12,53 @@ class App extends React.Component {
     constructor(props) {
         super();
 
-        this.move = this.move.bind(this);
         this.buildBoard = this.buildBoard.bind(this);
+        this.move = this.move.bind(this);
+        this.prevDefault = this.prevDefault.bind(this);
 
         this.state = {
             location: "",
             gameStarted: false,
             board: [
-                ["tl", "t", "t", "t", "tr"],
-                ["l", "n", "n", "n", "r"],
-                ["l", "n", "n", "n", "r"],
-                ["l", "n", "n", "n", "r"],
-                ["bl", "b", "b", "b", "rb"]
+                [
+                    [1, 1, 0, 1],
+                    [1, 0, 0, 1],
+                    [1, 0, 1, 0],
+                    [1, 0, 1, 0],
+                    [1, 1, 0, 0]
+                ],
+                [
+                    [0, 0, 1, 1],
+                    [0, 1, 0, 0],
+                    [1, 0, 1, 1],
+                    [1, 0, 1, 0],
+                    [0, 1, 0, 0]
+                ],
+                [
+                    [1, 0, 0, 1],
+                    [0, 1, 1, 0],
+                    [1, 0, 0, 1],
+                    [1, 1, 0, 0],
+                    [0, 1, 1, 1]
+                ],
+                [
+                    [0, 1, 0, 1],
+                    [1, 0, 0, 1],
+                    [0, 1, 1, 0],
+                    [0, 0, 0, 1],
+                    [1, 1, 0, 0]
+                ],
+                [
+                    [0, 0, 1, 1],
+                    [0, 1, 1, 0],
+                    [1, 0, 1, 1],
+                    [0, 1, 1, 0],
+                    [0, 1, 1, 1]
+                ]
             ],
             speed: 100,
-            xPos: 0,
-            yPos: 0,
-            xPast: "",
-            yPast: ""
+            xNext: 0,
+            yNext: 0
         };
     }
 
@@ -41,57 +70,38 @@ class App extends React.Component {
     }
 
     buildBoard(props) {
+        let classData = ["t", "r", "b", "l"];
         let rowsArray = [];
-        let squareClass = "";
 
         for (let i = 0; i < 5; i++) {
+            console.log(i + "i");
             for (let j = 0; j < 5; j++) {
+                console.log(j + "j");
+
+                let squareClass = "";
                 let squareId = i + "_" + j;
-                switch (this.state.board[i][j]) {
-                    case "t":
-                        squareClass = "t";
-                        break;
-                    case "r":
-                        squareClass = "r";
-                        break;
-
-                    case "b":
-                        squareClass = "b";
-                        break;
-
-                    case "l":
-                        squareClass = "l";
-                        break;
-
-                    case "tr":
-                        squareClass = "tr";
-                        break;
-
-                    case "rb":
-                        squareClass = "rb";
-                        break;
-
-                    case "bl":
-                        squareClass = "bl";
-                        break;
-
-                    case "tl":
-                        squareClass = "tl";
-                        break;
-                    default:
-                        squareClass = "box";
+                for (let k = 0; k < 4; k++) {
+                    console.log(k + "k");
+                    switch (this.state.board[i][j][k]) {
+                        case 0:
+                            break;
+                        case 1:
+                            squareClass = squareClass.concat(classData[k]);
+                            break;
+                        default:
+                            console.log("no");
+                    }
                 }
-
                 let player =
-                    this.state.xPos === j
-                        ? this.state.yPos === i
+                    this.state.xNext === j
+                        ? this.state.yNext === i
                             ? "player"
                             : "non-player"
                         : "non-player";
 
                 rowsArray.push(
                     <Square
-                        squareClass={squareClass + " " + player}
+                        squareClass={squareClass + " box " + player}
                         key={squareId}
                         squareId={squareId}
                         x={j}
@@ -102,56 +112,81 @@ class App extends React.Component {
                 );
             }
         }
-
         return <div className="grid">{rowsArray}</div>;
     }
 
     componentDidMount() {
         // toggle starting position
-
+        document.addEventListener("keydown", this.prevDefault);
         document.addEventListener("keydown", this.move);
     }
 
     move(e) {
         switch (e.keyCode) {
             case 38: //up
-                this.setState(previousState => {
-                    return {
-                        yPos: previousState.yPos - 1,
-                        xPast: previousState.xPos,
-                        yPast: previousState.yPos
-                    };
-                });
+                if (
+                    this.state.board[this.state.yNext][this.state.xNext][0] ===
+                    0
+                ) {
+                    this.setState(previousState => {
+                        return {
+                            yNext: previousState.yNext - 1
+                        };
+                    });
+                }
+
                 break;
             case 39: //right
-                this.setState(previousState => {
-                    return {
-                        xPos: previousState.xPos + 1,
-                        xPast: previousState.xPos,
-                        yPast: previousState.yPos
-                    };
-                });
+                if (
+                    this.state.board[this.state.yNext][this.state.xNext][1] ===
+                    0
+                ) {
+                    this.setState(previousState => {
+                        return {
+                            xNext: previousState.xNext + 1
+                        };
+                    });
+                }
                 break;
             case 40: //down
-                this.setState(previousState => {
-                    return {
-                        yPos: previousState.yPos + 1,
-                        xPast: previousState.xPos,
-                        yPast: previousState.yPos
-                    };
-                });
+                if (
+                    this.state.board[this.state.yNext][this.state.xNext][2] ===
+                    0
+                ) {
+                    this.setState(previousState => {
+                        return {
+                            yNext: previousState.yNext + 1
+                        };
+                    });
+                }
                 break;
             case 37: //left
-                this.setState(previousState => {
-                    return {
-                        xPos: previousState.xPos - 1,
-                        xPast: previousState.xPos,
-                        yPast: previousState.yPos
-                    };
-                });
+                if (
+                    this.state.board[this.state.yNext][this.state.xNext][3] ===
+                    0
+                ) {
+                    this.setState(previousState => {
+                        return {
+                            xNext: previousState.xNext - 1
+                        };
+                    });
+                }
                 break;
             default:
                 break;
+        }
+    }
+
+    prevDefault(e) {
+        if (
+            e.keyCode === 37 ||
+            e.keyCode === 38 ||
+            e.keyCode === 39 ||
+            e.keyCode === 40
+        ) {
+            e.preventDefault();
+        } else {
+            return false;
         }
     }
 
@@ -167,7 +202,7 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <h2 class="score">Round: Niiice</h2>
+                <h2 className="score">Round: Niiice</h2>
                 <div className="view">{this.buildBoard()}</div>
             </div>
         );
