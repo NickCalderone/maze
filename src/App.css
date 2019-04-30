@@ -7,27 +7,32 @@
     padding: 30px;
 }
 
+body {
+    background-color: mediumslateblue;
+}
+
 .view {
-    padding: 20px;
+    padding: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .grid {
-    width: 185px;
+    width: 370px;
     font-size: 0px;
 }
 
 .box {
     display: inline-block;
-    background-color: red;
-    border: solid red 6px;
+    background-color: aquamarine;
+    border: double aquamarine 6px;
     width: 25px;
     height: 25px;
 }
 
-.non-player {
+.goal {
+    background-color: gold;
 }
 
 .player {
@@ -46,71 +51,71 @@
 }
 
 .t {
-    border-top: solid 6px;
+    border-top: double 6px;
 }
 
 .r {
-    border-right: solid 6px;
+    border-right: double 6px;
 }
 
 .b {
-    border-bottom: solid 6px;
+    border-bottom: double 6px;
 }
 
 .l {
-    border-left: solid 6px;
+    border-left: double 6px;
 }
 
 .tr {
-    border-top: solid 6px;
-    border-right: solid 6px;
+    border-top: double 6px;
+    border-right: double 6px;
 }
 
 .rb {
-    border-right: solid 6px;
-    border-bottom: solid 6px;
+    border-right: double 6px;
+    border-bottom: double 6px;
 }
 
 .bl {
-    border-bottom: solid 6px;
-    border-left: solid 6px;
+    border-bottom: double 6px;
+    border-left: double 6px;
 }
 
 .tl {
-    border-top: solid 6px;
-    border-left: solid 6px;
+    border-top: double 6px;
+    border-left: double 6px;
 }
 
 .tb {
-    border-top: solid 6px;
-    border-bottom: solid 6px;
+    border-top: double 6px;
+    border-bottom: double 6px;
 }
 
 .rl {
-    border-right: solid 6px;
-    border-left: solid 6px;
+    border-right: double 6px;
+    border-left: double 6px;
 }
 
 .trb {
-    border-top: solid 6px;
-    border-right: solid 6px;
-    border-bottom: solid 6px;
+    border-top: double 6px;
+    border-right: double 6px;
+    border-bottom: double 6px;
 }
 
 .rbl {
-    border-right: solid 6px;
-    border-bottom: solid 6px;
-    border-left: solid 6px;
+    border-right: double 6px;
+    border-bottom: double 6px;
+    border-left: double 6px;
 }
 
 .tbl {
-    border-top: solid 6px;
-    border-bottom: solid 6px;
-    border-left: solid 6px;
+    border-top: double 6px;
+    border-bottom: double 6px;
+    border-left: double 6px;
 }
 
 .trl {
-    border-top: solid 6px;
-    border-right: solid 6px;
-    border-left: solid 6px;
+    border-top: double 6px;
+    border-right: double 6px;
+    border-left: double 6px;
 }

@@ -15,50 +15,45 @@ class App extends React.Component {
         this.buildBoard = this.buildBoard.bind(this);
         this.move = this.move.bind(this);
         this.prevDefault = this.prevDefault.bind(this);
+        this.winCheck = this.winCheck.bind(this);
 
         this.state = {
-            location: "",
-            gameStarted: false,
+            // prettier-ignore
             board: [
+                //       1             2             3             4             5             6             7             8             9            10
                 [
-                    [1, 1, 0, 1],
-                    [1, 0, 0, 1],
-                    [1, 0, 1, 0],
-                    [1, 0, 1, 0],
-                    [1, 1, 0, 0]
+        /*1*/       [1, 1, 0, 1], [1, 0, 0, 1], [1, 1, 0, 0], [1, 0, 1, 1], [1, 1, 0, 0], [1, 0, 0, 1], [1, 0, 1, 0], [1, 0, 0, 0], [1, 0, 1, 0], [1, 1, 1, 0]
+                ],
+                [ 
+        /*2*/       [0, 0, 1, 1], [0, 1, 0, 0], [0, 0, 1, 1], [1, 0, 1, 0], [0, 0, 0, 0], [0, 1, 1, 0], [1, 0, 1, 1], [0, 0, 1, 0], [1, 1, 1, 0], [1, 1, 0, 1] 
+                ], 
+                [
+        /*3*/       [1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 0, 1], [1, 1, 0, 0], [0, 0, 1, 1], [1, 1, 0, 0], [1, 0, 0, 1], [1, 0, 1, 0], [1, 0, 1, 0], [0, 1, 0, 0]
                 ],
                 [
-                    [0, 0, 1, 1],
-                    [0, 1, 0, 0],
-                    [1, 0, 1, 1],
-                    [1, 0, 1, 0],
-                    [0, 1, 0, 0]
+        /*4*/       [0, 1, 0, 1], [1, 0, 0, 1], [0, 1, 1, 0], [0, 1, 0, 1], [1, 0, 0, 1], [0, 0, 1, 0], [0, 0, 1, 0], [1, 1, 0, 0], [1, 0, 1, 1], [0, 1, 0, 0]
                 ],
                 [
-                    [1, 0, 0, 1],
-                    [0, 1, 1, 0],
-                    [1, 0, 0, 1],
-                    [1, 1, 0, 0],
-                    [0, 1, 1, 1]
+        /*5*/       [0, 0, 0, 1], [0, 1, 1, 0], [1, 0, 0, 1], [0, 1, 1, 0], [0, 0, 1, 1], [1, 1, 1, 0], [1, 0, 0, 1], [0, 0, 1, 0], [1, 1, 0, 0], [0, 1, 0, 1]
                 ],
                 [
-                    [0, 1, 0, 1],
-                    [1, 0, 0, 1],
-                    [0, 1, 1, 0],
-                    [0, 0, 0, 1],
-                    [1, 1, 0, 0]
+        /*6*/       [0, 1, 0, 1], [1, 0, 0, 1], [0, 0, 1, 0], [1, 0, 1, 0], [1, 1, 1, 0], [1, 1, 0, 1], [0, 0, 1, 1], [1, 1, 1, 0], [0, 1, 1, 1], [0, 1, 0, 1]
                 ],
                 [
-                    [0, 0, 1, 1],
-                    [0, 1, 1, 0],
-                    [1, 0, 1, 1],
-                    [0, 1, 1, 0],
-                    [0, 1, 1, 1]
+        /*7*/       [0, 1, 1, 1], [0, 1, 0, 1], [1, 0, 1, 1], [1, 0, 1, 0], [1, 0, 0, 0], [0, 0, 0, 0], [1, 0, 1, 0], [1, 1, 0, 0], [1, 1, 0, 1], [0, 1, 0, 1]
+                ],
+                [
+        /*8*/       [1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 0, 1], [1, 1, 0, 0], [0, 1, 1, 1], [0, 1, 0, 1], [1, 0, 0, 1], [0, 1, 1, 0], [0, 1, 0, 1], [0, 1, 0, 1]
+                ],
+                [
+        /*9*/       [0, 1, 0, 1], [1, 0, 0, 1], [0, 1, 1, 0], [0, 0, 0, 1], [1, 0, 0, 0], [0, 1, 1, 0], [0, 0, 1, 1], [1, 1, 0, 0], [0, 0, 1, 1], [0, 1, 1, 0]
+                ],
+                [
+        /*10*/      [0, 0, 1, 1], [0, 1, 1, 0], [1, 0, 1, 1], [0, 1, 1, 0], [0, 0, 1, 1], [1, 0, 1, 0], [1, 1, 1, 0], [0, 0, 1, 1], [1, 0, 1, 0], [1, 1, 1, 0]
                 ]
             ],
-            speed: 100,
-            xNext: 0,
-            yNext: 0
+            xPos: 0,
+            yPos: 0
         };
     }
 
@@ -73,28 +68,24 @@ class App extends React.Component {
         let classData = ["t", "r", "b", "l"];
         let rowsArray = [];
 
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 10; i++) {
             console.log(i + "i");
-            for (let j = 0; j < 5; j++) {
+            for (let j = 0; j < 10; j++) {
                 console.log(j + "j");
 
                 let squareClass = "";
                 let squareId = i + "_" + j;
                 for (let k = 0; k < 4; k++) {
-                    console.log(k + "k");
-                    switch (this.state.board[i][j][k]) {
-                        case 0:
-                            break;
-                        case 1:
-                            squareClass = squareClass.concat(classData[k]);
-                            break;
-                        default:
-                            console.log("no");
+                    if (this.state.board[i][j][k] === 1) {
+                        squareClass = squareClass.concat(classData[k]);
                     }
                 }
+                if (i === 9 && j === 9) {
+                    squareClass = squareClass.concat(" goal");
+                }
                 let player =
-                    this.state.xNext === j
-                        ? this.state.yNext === i
+                    this.state.xPos === j
+                        ? this.state.yPos === i
                             ? "player"
                             : "non-player"
                         : "non-player";
@@ -125,51 +116,59 @@ class App extends React.Component {
         switch (e.keyCode) {
             case 38: //up
                 if (
-                    this.state.board[this.state.yNext][this.state.xNext][0] ===
-                    0
+                    this.state.board[this.state.yPos][this.state.xPos][0] === 0
                 ) {
-                    this.setState(previousState => {
-                        return {
-                            yNext: previousState.yNext - 1
-                        };
-                    });
+                    this.setState(
+                        previousState => {
+                            return {
+                                yPos: previousState.yPos - 1
+                            };
+                        },
+                        () => this.winCheck()
+                    );
                 }
 
                 break;
             case 39: //right
                 if (
-                    this.state.board[this.state.yNext][this.state.xNext][1] ===
-                    0
+                    this.state.board[this.state.yPos][this.state.xPos][1] === 0
                 ) {
-                    this.setState(previousState => {
-                        return {
-                            xNext: previousState.xNext + 1
-                        };
-                    });
+                    this.setState(
+                        previousState => {
+                            return {
+                                xPos: previousState.xPos + 1
+                            };
+                        },
+                        () => this.winCheck()
+                    );
                 }
                 break;
             case 40: //down
                 if (
-                    this.state.board[this.state.yNext][this.state.xNext][2] ===
-                    0
+                    this.state.board[this.state.yPos][this.state.xPos][2] === 0
                 ) {
-                    this.setState(previousState => {
-                        return {
-                            yNext: previousState.yNext + 1
-                        };
-                    });
+                    this.setState(
+                        previousState => {
+                            return {
+                                yPos: previousState.yPos + 1
+                            };
+                        },
+                        () => this.winCheck()
+                    );
                 }
                 break;
             case 37: //left
                 if (
-                    this.state.board[this.state.yNext][this.state.xNext][3] ===
-                    0
+                    this.state.board[this.state.yPos][this.state.xPos][3] === 0
                 ) {
-                    this.setState(previousState => {
-                        return {
-                            xNext: previousState.xNext - 1
-                        };
-                    });
+                    this.setState(
+                        previousState => {
+                            return {
+                                xPos: previousState.xPos - 1
+                            };
+                        },
+                        () => this.winCheck()
+                    );
                 }
                 break;
             default:
@@ -199,13 +198,18 @@ class App extends React.Component {
         });
     }
 
+    winCheck() {
+        if (this.state.xPos === 9 && this.state.yPos === 9) {
+            alert("You Win!");
+            this.setState({
+                xPos: 0,
+                yPos: 0
+            });
+        } else return;
+    }
+
     render() {
-        return (
-            <div>
-                <h2 className="score">Round: Niiice</h2>
-                <div className="view">{this.buildBoard()}</div>
-            </div>
-        );
+        return <div className="view">{this.buildBoard()}</div>;
     }
 }
 
